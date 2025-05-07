@@ -1,5 +1,8 @@
 import {Button} from "./Button.tsx";
 import {useState} from "react";
+import {Students} from "./Students.tsx";
+import {Cars} from "./Cars.tsx";
+import {Money} from "./Money.tsx";
 
 type BodyProps = {
     text: string;
@@ -9,24 +12,26 @@ type BodyProps = {
     setMoney: (money: MoneyProps[]) => void
 }
 
-type StudentsProps = {
+export type StudentsProps = {
     id: number,
     name: string,
-    age: number
+    age: number,
 }
 
-type TopCarsProps = {
+export type TopCarsProps = {
     manufacturer: string,
     model: string
 }
 
-type MoneyProps = {
+export type MoneyProps = {
     banknots: string,
     value: number,
     number: string
 }
 
-type Filter = 'All' | 'Dollars' | 'RUBLS'
+export type FilterType = 'All' | 'Dollars' | 'RUBLS'
+
+
 
 export const Body = ({text, students, topCars, money}: BodyProps) => {
     const onClick0 = () => {
@@ -39,21 +44,22 @@ export const Body = ({text, students, topCars, money}: BodyProps) => {
         console.log("click heandler 2");
     }
 
-    let [filt, setFilter] = useState<Filter>('All')
+    const [filter, setFilterer] = useState<FilterType>('All')
     let moneyList = money
-    if (filt === 'Dollars') {
+    if (filter === 'Dollars') {
         moneyList = money.filter((element) => element.banknots === "Dollars")
 
     }
-    if (filt === 'RUBLS') {
+    if (filter === 'RUBLS') {
         moneyList = money.filter((element) => element.banknots === "RUBLS")
     }
 
-    const foo = (arg: Filter) => {
-        setFilter(arg)
+    const foo = (arg: FilterType) => {
+        setFilterer(arg)
     }
 
 
+    // eslint-disable-next-line prefer-const
     let [a, setA] = useState(1)
 
     const foo1 = () => {
@@ -65,70 +71,23 @@ export const Body = ({text, students, topCars, money}: BodyProps) => {
 
 
     return (
-        <>{text}
-            <ul>
-                {students.map((student, index) => {
-                    return (
-                        <li key={index}>{student.name}<span>age: {student.age}</span></li>
-                    )
-                })}
-            </ul>
+        <>
+            {text}
+            <Students students={students}/>
+            <Cars topCars={topCars}/>
+            <Money foo={foo} moneyList={moneyList}/>
 
-            <table className="table">
-                <tbody>
-                <tr>
-                    <th>Number</th>
-                    <th>Manufacturer</th>
-                    <th>Model</th>
-                </tr>
-                {topCars.map((topCar, index) => {
-                    return (
-                        <tr key={index}>
-                            <td>{index + 1}</td>
-                            <td>{topCar.manufacturer}</td>
-                            <td>{topCar.model}</td>
-                        </tr>
-
-                    )
-                })}
-                </tbody>
-            </table>
             <div>
                 <Button title={'Push'} onClick={onClick0}/>
                 <Button title={'Push'} onClick={() => onClick1(100200, 'orange')}/>
                 <Button title={'Push'} onClick={onClick2}/>
             </div>
-            <div className={'money__wrapper'}>
-                <table className={'table'}>
-                    <tbody>
-                    <tr>
-                        <th>number</th>
-                        <th>banknots</th>
-                        <th>value</th>
-                        <th>serial number</th>
-                    </tr>
-                    {moneyList.map((element, index) => {
-                        return (
-                            <tr key={index}>
-                                <td>{index + 1}</td>
-                                <td>{element.banknots}</td>
-                                <td>{element.value}</td>
-                                <td>{element.number}</td>
-                            </tr>
-                        )
-                    })}
-                    </tbody>
-                </table>
-                <Button title={'All'} onClick={() => foo('All')}/>
-                <Button title={'Dollars'} onClick={() => foo('Dollars')}/>
-                <Button title={'Rubles'} onClick={() => foo('RUBLS')}/>
+            <div>
                 <div>
-                    <div>
-                        {a}
-                    </div>
-                    <Button title={'+'} onClick={foo1}/>
-                    <Button title={'0'} onClick={foo2}/>
+                    {a}
                 </div>
+                <Button title={'+'} onClick={foo1}/>
+                <Button title={'0'} onClick={foo2}/>
             </div>
         </>
     )

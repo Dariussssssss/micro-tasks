@@ -55,10 +55,9 @@ table, th, td {
   width: 100%;
 }
 
-.orange{
+.orange {
   background-color: darkorange;
 }
-
 
 
 th {
@@ -87,4 +86,12 @@ button:hover {
 
 button:active, button:focus {
   outline: none;
+}
+
+.money__wrapper {
+  padding: 1em;
+}
+
+.money__wrapper table {
+  height: 600px;
 }
