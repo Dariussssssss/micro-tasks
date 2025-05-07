@@ -44,18 +44,20 @@ export const Body = ({text, students, topCars, money}: BodyProps) => {
         console.log("click heandler 2");
     }
 
-    const [filter, setFilterer] = useState<FilterType>('All')
+    const [filterButton, setFilterButton] = useState<FilterType>('All')
+
     let moneyList = money
-    if (filter === 'Dollars') {
+
+    if (filterButton === 'Dollars') {
         moneyList = money.filter((element) => element.banknots === "Dollars")
 
     }
-    if (filter === 'RUBLS') {
+    if (filterButton === 'RUBLS') {
         moneyList = money.filter((element) => element.banknots === "RUBLS")
     }
 
     const foo = (arg: FilterType) => {
-        setFilterer(arg)
+        setFilterButton(arg)
     }
 
 
